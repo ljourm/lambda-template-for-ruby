@@ -12,13 +12,7 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7.4
-    - uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: bundle-${{ hashFiles('**/Gemfile.lock') }}
-    - name: Install gem dependencies
-      run: bundle install --path vendor/bundle --deployment --without production staging development
-      working-directory: ./src
+        bundler-cache: true
     - name: Run Rubocop
       run: bundle exec rubocop
       working-directory: ./src
