@@ -44,10 +44,10 @@ $ bundle exec rubocop
 
 ## 実装方針
 
-- `/src/implements/*` に実装していく。
+- `/src/app/*` に実装していく。
     - 必要に応じて `/src/config/*` に設定を記述する。
     - `/src/runner/*` や `/src/main.rb` は基本的に修正しない。
-- `/src/spec/implements/*` にテストを記述する。
+- `/src/spec/app/*` にテストを記述する。
 
 参考: [docs/flow](docs/flow)
 
