@@ -1,20 +1,15 @@
-require 'logger'
 require 'json'
-require_relative 'config'
+require './lib/base'
 
 module Runner
   class << self
-    def logger
-      @logger ||= Logger.new($stdout, level: config[:log_level] || 'INFO')
-    end
-
     def run(executor:, event:, context:)
       hashed_event = event.transform_keys(&:to_sym)
       hashed_context = context.transform_keys(&:to_sym)
 
       output_debug_logs(hashed_event, hashed_context)
 
-      executor.new(config: config, event: hashed_event, context: hashed_context).execute
+      executor.new(event: hashed_event, context: hashed_context).execute
 
       logger.info(message: 'success')
 
@@ -33,6 +28,14 @@ module Runner
       logger.debug({ content: 'config', body: config })
       logger.debug({ content: 'event args', body: hashed_event })
       logger.debug({ content: 'context args', body: hashed_context })
+    end
+
+    def config
+      Lib.config
+    end
+
+    def logger
+      Lib.logger
     end
   end
 end

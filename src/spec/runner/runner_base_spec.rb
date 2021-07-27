@@ -1,11 +1,5 @@
 RSpec.describe Runner do
-  describe '#logger' do
-    subject { described_class.logger }
-
-    it { is_expected.to be_an_instance_of(Logger) }
-  end
-
-  describe '#run' do
+  describe '.run' do
     subject { described_class.run(executor: executor, event: event, context: context) }
 
     let(:executor) { App::Executor }

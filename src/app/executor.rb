@@ -1,15 +1,26 @@
+require './lib/base'
+
 module App
   class Executor
-    def initialize(config:, event:, context:)
-      @config = config
+    def initialize(event:, context:)
       @event = event
       @context = context
     end
 
     def execute
-      Runner.logger.debug('executed')
-      Runner.logger.debug(@config[:common_message])
-      Runner.logger.debug(@config[:env_message])
+      logger.debug('executed')
+      logger.debug(config[:common_message])
+      logger.debug(config[:env_message])
+    end
+
+    private
+
+    def config
+      Lib.config
+    end
+
+    def logger
+      Lib.logger
     end
   end
 end

@@ -1,6 +1,5 @@
 RSpec.describe App::Executor do
-  let(:executor) { described_class.new(config: config, event: event, context: context) }
-  let(:config) { {} }
+  let(:executor) { described_class.new(event: event, context: context) }
   let(:event) { {} }
   let(:context) { {} }
 
