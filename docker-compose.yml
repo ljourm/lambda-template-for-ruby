@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    volumes:
+      - ./src:/app
+      - bundle:/usr/local/bundle
+    working_dir: /app
+    stdin_open: true
+    tty: true
+volumes:
+  bundle:

@@ -1,0 +1,58 @@
+name: deploy-to-production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION:           ap-northeast-1
+      LAMBDA_FUNCTION_NAME: function-production
+      AWS_LAMBDA_ROLE_ARN:  ${{ env.PRODUCTION_AWS_LAMBDA_ROLE_ARN }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: create lambda package
+        run: cd src; zip -r ../package.zip ./*
+
+      # see: https://github.com/aws-actions/configure-aws-credentials
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # see: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/list-functions.html
+      - name: check lambda function exists
+        id: function_exists
+        run: |
+          aws lambda list-functions \
+            | grep "\"FunctionName\": \"${{ env.LAMBDA_FUNCTION_NAME}}\""
+        continue-on-error: true
+
+      # see: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/create-function.html
+      - name: deploy to lambda (create)
+        run: |
+          aws lambda create-function \
+            --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+            --runtime ruby2.7 \
+            --handler main.lambda_handler \
+            --role ${{ env.AWS_LAMBDA_ROLE_ARN }} \
+            --zip-file fileb://package.zip \
+            --publish
+        if: steps.function_exists.outcome == 'failure'
+
+      # see: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/update-function-code.html
+      - name: deploy to lambda (update)
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+            --zip-file fileb://package.zip \
+            --publish
+        if: steps.function_exists.outcome == 'success'
