@@ -8,7 +8,7 @@ RSpec.describe Runner do
   describe '#run' do
     subject { described_class.run(executor: executor, event: event, context: context) }
 
-    let(:executor) { Implements::Executor }
+    let(:executor) { App::Executor }
     let(:event) { {} }
     let(:context) { {} }
 

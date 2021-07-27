@@ -1,4 +1,4 @@
-module Implements
+module App
   class Executor
     def initialize(config:, event:, context:)
       @config = config
