@@ -18,11 +18,14 @@ jobs:
         key: bundle-${{ hashFiles('**/Gemfile.lock') }}
     - name: Install gem dependencies
       run: bundle install --path vendor/bundle --deployment --without production staging development
+      working-directory: ./src
     - name: Run Rubocop
       run: bundle exec rubocop
+      working-directory: ./src
     - name: Run Rspec
       run: bundle exec rspec
+      working-directory: ./src
     - uses: actions/upload-artifact@v2
       with:
         name: coverage_rspec
-        path: coverage
+        path: ./src/coverage
