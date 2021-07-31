@@ -25,7 +25,7 @@ jobs:
           path: vendor/bundle
 
       - name: create lambda package
-        run: cd src; zip -r ../package.zip ./*
+        run: cd src; zip -r ../package.zip .
 
       # see: https://github.com/aws-actions/configure-aws-credentials
       - name: configure aws credentials
