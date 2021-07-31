@@ -13,7 +13,7 @@ AWS Lambda + Ruby を使用する際のテンプレート。
   - staging
   - development
   - test
-- Docker Composeによるローカル環境
+- Docker Composeによるローカル環境構築
 
 ## 環境
 
