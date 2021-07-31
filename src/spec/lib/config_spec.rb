@@ -1,6 +1,9 @@
-RSpec.describe Lib do
-  describe '.config' do
-    subject { described_class.config }
+RSpec.describe Lib::Config do
+  let(:dummy_class) { Class.new { include Lib::Config } }
+  let(:dummy_instance) { dummy_class.new }
+
+  describe '#config' do
+    subject { dummy_instance.config }
 
     let(:expected_value) do
       {
