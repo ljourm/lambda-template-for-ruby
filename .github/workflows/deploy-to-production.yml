@@ -12,6 +12,7 @@ jobs:
       AWS_REGION:           ap-northeast-1
       LAMBDA_FUNCTION_NAME: function-production
       AWS_LAMBDA_ROLE_ARN:  ${{ secrets.PRODUCTION_AWS_LAMBDA_ROLE_ARN }}
+      APP_ENV:              production
 
     steps:
       - name: checkout
@@ -52,6 +53,7 @@ jobs:
             --handler main.lambda_handler \
             --role ${{ env.AWS_LAMBDA_ROLE_ARN }} \
             --zip-file fileb://package.zip \
+            --environment "Variables={APP_ENV=${{ env.APP_ENV }}}" \
             --publish
         if: steps.function_exists.outcome == 'failure'
 
