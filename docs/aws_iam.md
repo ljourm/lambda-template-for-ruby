@@ -47,7 +47,7 @@
                 "logs:PutLogEvents"
             ],
             "Resource": [
-                "*:log-group:/aws/lambda/lambda-template-for-ruby:*"
+                "arn:aws:logs:{region}:{account-id}:log-group:/aws/lambda-template-for-ruby:*"
             ]
         }
     ]
