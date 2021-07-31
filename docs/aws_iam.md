@@ -57,7 +57,7 @@
 ## IAM roles
 ### `LambdaRunnerRole`
 以下を紐付け
-- `LambdaFunctionWriteAccess`
+- `LogWriteAccessForLambdaFunction`
 
 ## IAM users
 
