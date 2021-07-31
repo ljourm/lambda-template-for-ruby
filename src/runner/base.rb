@@ -17,11 +17,9 @@ class Runner
   end
 
   def run(event, context)
-    hashed_event = event.transform_keys(&:to_sym)
+    output_debug_logs(event)
 
-    output_debug_logs(hashed_event)
-
-    @executor.new(event: hashed_event, context: context).execute
+    @executor.new(event: event, context: context).execute
 
     logger.info(message: 'success')
 
@@ -35,9 +33,9 @@ class Runner
 
   private
 
-  def output_debug_logs(hashed_event)
+  def output_debug_logs(event)
     logger.debug({ content: 'APP_ENV', body: ENV['APP_ENV'] })
     logger.debug({ content: 'config', body: config })
-    logger.debug({ content: 'event args', body: hashed_event })
+    logger.debug({ content: 'event', body: event })
   end
 end
