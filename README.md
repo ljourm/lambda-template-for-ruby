@@ -3,7 +3,7 @@
 AWS Lambda + Ruby を使用する際のテンプレート。
 
 - GitHub ActionsによるLambdaへのデプロイ
-  - トリガーや送信先はGUIから設定そる想定
+  - トリガーや送信先はGUIから設定する想定
 - GitHub ActionsによるCI実行
 - 各種テスト
   - rspec
