@@ -21,6 +21,9 @@ Style/TrailingCommaInHashLiteral:
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
+Style/AsciiComments:
+  Enabled: false
+
 Metrics/BlockLength:
   IgnoredMethods:
     - describe
