@@ -1,0 +1,4 @@
+env_name: staging
+trigger_branch_name: develop
+lambda_function_names:
+  - lambda-template-for-ruby-staging

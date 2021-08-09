@@ -1,16 +1,16 @@
-name: deploy-to-staging
+name: deploy-to-<%= @config[:env_name] %>
 
 on:
   push:
     branches:
-      - develop
+      - <%= @config[:trigger_branch_name] %>
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
       AWS_REGION:           ap-northeast-1
-      AWS_LAMBDA_ROLE_ARN:  ${{ secrets.AWS_LAMBDA_ROLE_ARN_STAGING }}
+      AWS_LAMBDA_ROLE_ARN:  ${{ secrets.AWS_LAMBDA_ROLE_ARN_<%= @config[:env_name].upcase %> }}
 
     steps:
       - name: checkout
@@ -19,7 +19,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.4
-
+<% if @config[:use_bundler]%>
       - uses: actions/cache@v2
         with:
           path: vendor/bundle
@@ -35,7 +35,7 @@ jobs:
         run: |
           cd src
           bundle install
-
+<% end %>
       - name: create lambda package
         run: |
           cd src
@@ -48,25 +48,25 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-
+<% @config[:lambda_function_names].each do |lambda_function_name| %>
       # see: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/list-functions.html
       - name: check lambda function exists
         id: function_exists
         run: |
           aws lambda list-functions \
-            | grep "\"FunctionName\": \"lambda-template-for-ruby-staging\""
+            | grep "\"FunctionName\": \"<%= lambda_function_name %>\""
         continue-on-error: true
 
       # see: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/create-function.html
       - name: deploy to lambda (create)
         run: |
           aws lambda create-function \
-            --function-name lambda-template-for-ruby-staging \
+            --function-name <%= lambda_function_name %> \
             --runtime ruby2.7 \
             --handler main.lambda_handler \
             --role ${{ env.AWS_LAMBDA_ROLE_ARN }} \
             --zip-file fileb://package.zip \
-            --environment "Variables={APP_ENV=staging}" \
+            --environment "Variables={APP_ENV=<%= @config[:env_name] %>}" \
             --publish
         if: steps.function_exists.outcome == 'failure'
 
@@ -74,8 +74,8 @@ jobs:
       - name: deploy to lambda (update)
         run: |
           aws lambda update-function-code \
-            --function-name lambda-template-for-ruby-staging \
+            --function-name <%= lambda_function_name %> \
             --zip-file fileb://package.zip \
             --publish
         if: steps.function_exists.outcome == 'success'
-
+<% end %>
