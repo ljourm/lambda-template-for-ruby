@@ -1,4 +1,4 @@
-RSpec.describe App::Executor do
+RSpec.describe App::SampleExecutor do
   let(:executor) { described_class.new(event: event, context: context) }
   let(:event) { {} }
   let(:context) { {} }

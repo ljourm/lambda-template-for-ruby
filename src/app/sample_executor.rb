@@ -2,7 +2,7 @@ require './lib/config'
 require './lib/app_logger'
 
 module App
-  class Executor
+  class SampleExecutor
     include Lib::Config
     include Lib::AppLogger
 

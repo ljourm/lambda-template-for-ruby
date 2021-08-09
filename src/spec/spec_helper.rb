@@ -103,6 +103,7 @@ RSpec.configure do |config|
 
   SimpleCov.start
 
+  Dir[File.join(File.dirname(__FILE__), '../runner.rb')].sort.each { |f| require f }
   Dir[File.join(File.dirname(__FILE__), '../app/**/*.rb')].sort.each { |f| require f }
-  Dir[File.join(File.dirname(__FILE__), '../runner/**/*.rb')].sort.each { |f| require f }
+  Dir[File.join(File.dirname(__FILE__), '../lib/**/*.rb')].sort.each { |f| require f }
 end
