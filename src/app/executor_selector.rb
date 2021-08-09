@@ -10,7 +10,11 @@ module App
     }.freeze
 
     def self.executor(function_name)
-      EXECUTORS[function_name.to_sym]
+      key = function_name.to_sym
+
+      raise "undefined executor '#{function_name}'" unless EXECUTORS.key?(key)
+
+      EXECUTORS[key]
     end
   end
 end
