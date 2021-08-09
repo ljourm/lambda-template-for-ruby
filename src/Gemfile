@@ -2,9 +2,10 @@ source 'https://rubygems.org'
 
 ruby '2.7.4'
 
-gem 'dotenv'
-
 group :development, :test do
+  gem 'aws-sdk-lambda'
+  gem 'dotenv'
+
   gem 'rspec', require: false
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false

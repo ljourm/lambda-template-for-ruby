@@ -1,5 +1,6 @@
 require 'yaml'
 require 'erb'
+require '../../src/lib/utility/transform_keys_to_sym'
 
 TEMPLATE_FILEPATH = './template.yml.erb'
 
@@ -7,10 +8,10 @@ erb = ERB.new(File.read(TEMPLATE_FILEPATH))
 erb.filename = TEMPLATE_FILEPATH
 
 Dir.glob('./config/environments/*.yml') do |filepath|
-  common_config = YAML.load_file('config/common.yml').transform_keys(&:to_sym)
-  environment_config = YAML.load_file(filepath).transform_keys(&:to_sym)
+  common_config = YAML.load_file('config/common.yml')
+  environment_config = YAML.load_file(filepath)
 
-  @config = common_config.merge(environment_config)
+  @config = Utility.transform_keys_to_sym(common_config.merge(environment_config))
 
   output_filepath = "../../.github/workflows/deploy-to-#{@config[:env_name]}.yml"
 

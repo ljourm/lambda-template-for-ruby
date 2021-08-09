@@ -8,9 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      AWS_REGION:           ap-northeast-1
-      AWS_LAMBDA_ROLE_ARN:  ${{ secrets.AWS_LAMBDA_ROLE_ARN_PRODUCTION }}
 
     steps:
       - name: checkout
@@ -47,7 +44,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ap-northeast-1
 
       # see: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/list-functions.html
       - name: check lambda function exists
@@ -64,7 +61,7 @@ jobs:
             --function-name lambda-template-for-ruby-production \
             --runtime ruby2.7 \
             --handler main.lambda_handler \
-            --role ${{ env.AWS_LAMBDA_ROLE_ARN }} \
+            --role ${{ secrets.AWS_LAMBDA_ROLE_ARN_PRODUCTION }} \
             --zip-file fileb://package.zip \
             --environment "Variables={APP_ENV=production}" \
             --publish

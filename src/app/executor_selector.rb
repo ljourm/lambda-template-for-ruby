@@ -1,10 +1,12 @@
-require './app/sample_executor'
+require './app/executor/sample_logger'
+require './app/executor/sample_lambda_function_list'
 
 module App
   class ExecutorSelector
     EXECUTORS = {
       # function_name(Symbol): executor(Class)
-      'sample-function': App::SampleExecutor,
+      'sample-logger': App::Executor::SampleLogger,
+      'sample-lambda-function-list': App::Executor::SampleLambdaFunctionList,
     }.freeze
 
     def self.executor(function_name)

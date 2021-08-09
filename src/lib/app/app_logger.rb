@@ -1,7 +1,7 @@
 require 'logger'
-require './lib/config'
+require './lib/app/config'
 
-module Lib
+module App
   module AppLogger
     class << self
       APPLICATION_CONFIG_FILENAME = 'config/application.yml'.freeze
@@ -13,12 +13,12 @@ module Lib
       private
 
       def config
-        Lib::Config.config
+        App::Config.config
       end
     end
 
     def logger
-      Lib::AppLogger.logger
+      App::AppLogger.logger
     end
   end
 end

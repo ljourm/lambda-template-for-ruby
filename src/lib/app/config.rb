@@ -1,6 +1,7 @@
 require 'yaml'
+require './lib/utility/transform_keys_to_sym'
 
-module Lib
+module App
   module Config
     class << self
       APPLICATION_CONFIG_FILENAME = 'config/application.yml'.freeze
@@ -11,7 +12,7 @@ module Lib
         application_config = YAML.load_file(application_config_filename)
         environment_config = YAML.load_file(environment_config_filename)
 
-        @config = application_config.merge(environment_config).transform_keys(&:to_sym)
+        @config = Utility.transform_keys_to_sym(application_config.merge(environment_config))
       end
 
       private
@@ -26,7 +27,7 @@ module Lib
     end
 
     def config
-      Lib::Config.config
+      App::Config.config
     end
   end
 end

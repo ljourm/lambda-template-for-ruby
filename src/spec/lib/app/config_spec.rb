@@ -1,5 +1,5 @@
-RSpec.describe Lib::Config do
-  let(:dummy_class) { Class.new { include Lib::Config } }
+RSpec.describe App::Config do
+  let(:dummy_class) { Class.new { include App::Config } }
   let(:dummy_instance) { dummy_class.new }
 
   describe '#config' do
@@ -10,6 +10,7 @@ RSpec.describe Lib::Config do
         common_message: 'This is common message',
         env_message: 'This env is test.',
         log_level: 'FATAL',
+        region: 'ap-northeast-1',
       }
     end
 

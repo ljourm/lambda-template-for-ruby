@@ -1,4 +1,4 @@
-RSpec.describe App::SampleExecutor do
+RSpec.describe App::Executor::SampleLogger do
   let(:executor) { described_class.new(event: event, context: context) }
   let(:event) { {} }
   let(:context) { {} }

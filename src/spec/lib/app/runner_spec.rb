@@ -1,4 +1,4 @@
-RSpec.describe Runner do
+RSpec.describe App::Runner do
   describe '.run' do
     subject { described_class.run(event: event, context: context) }
 
