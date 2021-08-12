@@ -63,6 +63,7 @@ jobs:
             --runtime ruby2.7 \
             --handler main.lambda_handler \
             --role ${{ secrets.AWS_LAMBDA_ROLE_ARN_PRODUCTION }} \
+            --tags "created_by=lambda-template-for-ruby" \
             --zip-file fileb://package.zip \
             --environment "Variables={APP_ENV=production}" \
             --publish

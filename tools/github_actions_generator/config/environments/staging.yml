@@ -3,3 +3,5 @@ trigger_branch_name: develop
 lambda_functions:
   - name: lambda-template-for-ruby-staging
     secret_role_arn_name: AWS_LAMBDA_ROLE_ARN_STAGING
+    tags:
+      - created_by: lambda-template-for-ruby
