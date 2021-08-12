@@ -1,0 +1,5 @@
+env_name: production
+trigger_branch_name: master
+lambda_functions:
+  - name: lambda-template-for-ruby-production
+    secret_role_arn_name: AWS_LAMBDA_ROLE_ARN_PRODUCTION

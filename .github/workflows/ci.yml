@@ -1,0 +1,26 @@
+name: ci
+
+on: [push]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: test
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.4
+        bundler-cache: true
+        working-directory: ./src
+    - name: Run Rubocop
+      run: bundle exec rubocop
+      working-directory: ./src
+    - name: Run Rspec
+      run: bundle exec rspec
+      working-directory: ./src
+    - uses: actions/upload-artifact@v2
+      with:
+        name: coverage_rspec
+        path: ./src/coverage
