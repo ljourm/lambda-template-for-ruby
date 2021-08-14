@@ -8,7 +8,8 @@ $ docker-compose exec app bash
 
 ## 関数のローカル実行
 ```sh
-# 事前にDocker内に入り、.envを編集する
+# .env.sampleを元に.envを作成し、編集する
+# 事前にDocker内に入る
 $ ruby main.rb
 ```
 
