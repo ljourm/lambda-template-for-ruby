@@ -45,11 +45,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: <%= @config[:region] %>
-<% @config[:lambda_functions].each do |lambda_function| %>
+<% @config[:lambda_functions].each.with_index(1) do |lambda_function, i| %>
       # **** <%= lambda_function[:name] %> ****
       # see: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/list-functions.html
       - name: check lambda function exists
-        id: function_exists
+        id: function_exists_<%= i %>
         run: |
           aws lambda list-functions \
             | grep "\"FunctionName\": \"<%= lambda_function[:name] %>\""
@@ -67,7 +67,7 @@ jobs:
             --zip-file fileb://package.zip \
             --environment "Variables={APP_ENV=<%= @config[:env_name] %>}" \
             --publish
-        if: steps.function_exists.outcome == 'failure'
+        if: steps.function_exists_<%= i %>.outcome == 'failure'
 
       # see: https://awscli.amazonaws.com/v2/documentation/api/latest/reference/lambda/update-function-code.html
       - name: deploy to lambda (update)
@@ -76,5 +76,5 @@ jobs:
             --function-name <%= lambda_function[:name] %> \
             --zip-file fileb://package.zip \
             --publish
-        if: steps.function_exists.outcome == 'success'
+        if: steps.function_exists_<%= i %>.outcome == 'success'
 <% end %>
