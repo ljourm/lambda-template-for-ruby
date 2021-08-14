@@ -28,6 +28,7 @@ AWS Lambda + Ruby を使用する際のテンプレート。
 - [開発方法](./docs/development.md)
 - [デプロイ](./docs/deployment.md)
 - [GitHub Actions secrets](./docs/github_actions_secrets.md)
+- [GitHub Actions IAM user](./docs/github_actions_iam_user.md)
 
 ## Executor
 

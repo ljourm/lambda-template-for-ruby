@@ -1,11 +1,11 @@
-# AWS IAM Lambda code writer
+# GitHub Actions AWS user
 
 - GitHub Actionsによるデプロイで使用する。
 - Lambda自体を登録/更新する権限を持つ。
 
 ## IAM policies
 
-### `LambdaFunctionCodeWriteAccess`
+### `LambdaFunctionFunctionWriteAccess`
 
 ```json
 {
@@ -26,8 +26,8 @@
 }
 ```
 
-## IAM users
+## IAM user
 
-### `LambdaCodeWriter`
+### `LambdaFunctionWriter`
 以下を紐付け
-- `LambdaFunctionCodeWriteAccess`
+- `LambdaFunctionFunctionWriteAccess`

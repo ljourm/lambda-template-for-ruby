@@ -4,6 +4,16 @@
 
 Lambdaの関数一覧をログに出力するサンプル。
 
-## Role
+## IAM role
 
-[SampleLambdaRunnerRole](../aws_iam/sample_lambda_runner_role.md)
+### `SampleLambdaRunnerRole`
+
+以下を紐付け
+- `LogWriteAccessForLambdaFunction`
+  - [iam_log_writer](./iam_log_writer.md)
+- `LambdaFunctionFunctionWriteAccess`
+  - [github_actions_iam_user](../github_actions_iam_user.md)
+
+## IAM policies
+
+none
