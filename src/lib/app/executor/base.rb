@@ -7,17 +7,11 @@ module App
       include App::Config
       include App::AppLogger
 
+      attr_reader :event, :context
+
       def initialize(event:, context:)
         @event = event
         @context = context
-      end
-
-      def event
-        @event
-      end
-
-      def context
-        @context
       end
     end
   end
